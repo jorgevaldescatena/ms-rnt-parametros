@@ -18,9 +18,17 @@ public interface ZonaService {
     /**
      * Devuelve los ids de las comunas correspondientes a las zonas pasadas como parámetro
      *
-     * @param zonas Lista de zonas a consultar
+     * @param zonaDTOS Lista de zonas a consultar
      * @return List<String> Lista de ids de comunas asociadas a las zonas
      */
     List<String> getComunasIdsfromZonas(List<ZonaDTO> zonaDTOS);
+
+    /**
+     * Devuelve los ids de las localidades correspondientes a las zonas pasadas como parámetro
+     *
+     * @param zonasDTO Lista de zonas a consultar
+     * @return List<Integer> Lista de ids de localidades asociadas a las zonas
+     */
+    List<Integer> getLocalidadesIdsFromZonas(List<ZonaDTO> zonasDTO);
 
 }

@@ -3,6 +3,7 @@ package com.mtt.rnt.servicesImpl;
 import com.mtt.rnt.dto.ZonaDTO;
 import com.mtt.rnt.entities.Zona;
 import com.mtt.rnt.repository.ZonaComunaRepository;
+import com.mtt.rnt.repository.ZonaLocalidadRepository;
 import com.mtt.rnt.repository.ZonaRegionRepository;
 import com.mtt.rnt.repository.ZonaRepository;
 import com.mtt.rnt.services.ZonaService;
@@ -25,6 +26,9 @@ public class ZonaServiceImpl implements ZonaService {
     @Autowired
     ZonaRegionRepository zonaRegionRepository;
 
+    @Autowired
+    ZonaLocalidadRepository zonaLocalidadRepository;
+
     @Override
     public List<String> getRegionesIdsFromZonas(List<ZonaDTO> zonasDTO) {
         if (zonasDTO == null || zonasDTO.isEmpty()) {
@@ -40,15 +44,29 @@ public class ZonaServiceImpl implements ZonaService {
 
     @Override
     public List<String> getComunasIdsfromZonas(List<ZonaDTO> zonasDTO) {
+        if (zonasDTO == null || zonasDTO.isEmpty()) {
+            throw new IllegalArgumentException("La lista de zonas no puede estar vacía.");
+        }
+
         List<Long> zonasIds = zonasDTO.stream()
                 .map(ZonaDTO::getId)
                 .collect(Collectors.toList());
 
-        if (zonasIds.isEmpty()) {
+        return zonaComunaRepository.findDistinctIdComunaByZonaIds(zonasIds);
+    }
+
+    @Override
+    public List<Integer> getLocalidadesIdsFromZonas(List<ZonaDTO> zonasDTO) {
+        if (zonasDTO == null || zonasDTO.isEmpty()) {
             throw new IllegalArgumentException("La lista de zonas no puede estar vacía.");
         }
 
-        return zonaComunaRepository.findDistinctIdComunaByZonaIds(zonasIds);
+        List<Long> zonasIds = zonasDTO.stream()
+                .map(ZonaDTO::getId)
+                .collect(Collectors.toList());
+
+        return zonaLocalidadRepository.findDistinctIdLocalidadByZonaIds(zonasIds);
+
     }
 
 }
