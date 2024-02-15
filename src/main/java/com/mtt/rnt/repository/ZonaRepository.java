@@ -11,8 +11,4 @@ import java.util.List;
 
 @Repository
 public interface ZonaRepository extends JpaRepository<Zona, Long>, JpaSpecificationExecutor<Zona> {
-
-    @Query("SELECT DISTINCT zr.idRegion FROM ZonaRegion zr WHERE zr.zona.id IN :ids")
-    List<String> findDistinctRegionIdsByZonaIds(@Param("ids") List<Long> zonasIds);
-
 }

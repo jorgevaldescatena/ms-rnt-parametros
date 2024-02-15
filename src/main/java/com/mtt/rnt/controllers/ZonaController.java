@@ -1,5 +1,6 @@
 package com.mtt.rnt.controllers;
 
+import com.mtt.rnt.dto.ZonaDTO;
 import com.mtt.rnt.entities.Zona;
 import com.mtt.rnt.services.ZonaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class ZonaController {
     ZonaService zonaService;
 
     @GetMapping("/regiones-ids")
-    public ResponseEntity<List<String>> getRegionesIdsFromZonas(@RequestBody List<Zona> zonas) {
+    public ResponseEntity<List<String>> getRegionesIdsFromZonas(@RequestBody List<ZonaDTO> zonas) {
         List<String> regionesIds = zonaService.getRegionesIdsFromZonas(zonas);
         return ResponseEntity.ok(regionesIds);
     }
