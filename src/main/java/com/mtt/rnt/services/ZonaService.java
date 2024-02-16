@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface ZonaService {
 
+    List<ZonaDTO> getAllZonas();
+
     /**
      * Devuelve los ids de las regiones correspondientes a las zonas pasadas como parámetro
      *

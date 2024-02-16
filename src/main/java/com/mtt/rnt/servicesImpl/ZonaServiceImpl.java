@@ -1,6 +1,7 @@
 package com.mtt.rnt.servicesImpl;
 
 import com.mtt.rnt.dto.ZonaDTO;
+import com.mtt.rnt.entities.Servicio;
 import com.mtt.rnt.entities.Zona;
 import com.mtt.rnt.repository.ZonaComunaRepository;
 import com.mtt.rnt.repository.ZonaLocalidadRepository;
@@ -28,6 +29,12 @@ public class ZonaServiceImpl implements ZonaService {
 
     @Autowired
     ZonaLocalidadRepository zonaLocalidadRepository;
+
+    @Override
+    public List<ZonaDTO> getAllZonas() {
+        List<Zona> allZonas = zonaRepository.findAll();
+        return allZonas.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
 
     @Override
     public List<String> getRegionesIdsFromZonas(List<ZonaDTO> zonasDTO) {
@@ -67,6 +74,54 @@ public class ZonaServiceImpl implements ZonaService {
 
         return zonaLocalidadRepository.findDistinctIdLocalidadByZonaIds(zonasIds);
 
+    }
+
+    /**
+     * Convierte una entidad Zona a su correspondiente DTO
+     *
+     * @param zona Entidad Zona
+     * @return DTO Zona
+     */
+    public ZonaDTO convertToDto(Zona zona) {
+        ZonaDTO dto = new ZonaDTO();
+        dto.setId(zona.getId());
+        dto.setNombre(zona.getNombre());
+        dto.setDescriptor(zona.getDescriptor());
+        dto.setIdRegion(zona.getIdRegion());
+        dto.setIdOld(zona.getIdOld());
+        dto.setActiva(zona.getActiva());
+        dto.setTipoZona(zona.getTipoZona() != null ? zona.getTipoZona().getNombre() : null);
+        dto.setTipoSubsidio(zona.getTipoSubsidio() != null ? zona.getTipoSubsidio().getNombre() : null);
+
+        if (zona.getServicios() != null && !zona.getServicios().isEmpty()) {
+            List<String> servicioIds = zona.getServicios().stream()
+                    .map(servicio -> servicio.getId().toString())
+                    .collect(Collectors.toList());
+            dto.setServicios(servicioIds);
+        }
+
+        if (zona.getZonaRegiones() != null && !zona.getZonaRegiones().isEmpty()) {
+            List<String> regionIds = zona.getZonaRegiones().stream()
+                    .map(zonaRegion -> zonaRegion.getIdRegion())
+                    .collect(Collectors.toList());
+            dto.setRegiones(regionIds);
+        }
+
+        if (zona.getZonaComunas() != null && !zona.getZonaComunas().isEmpty()) {
+            List<String> comunaIds = zona.getZonaComunas().stream()
+                    .map(zonaComuna -> zonaComuna.getIdComuna())
+                    .collect(Collectors.toList());
+            dto.setComunas(comunaIds);
+        }
+
+        if (zona.getZonaLocalidades() != null && !zona.getZonaLocalidades().isEmpty()) {
+            List<String> localidadIds = zona.getZonaLocalidades().stream()
+                    .map(zonaLocalidad -> zonaLocalidad.getIdLocalidad().toString())
+                    .collect(Collectors.toList());
+            dto.setLocalidades(localidadIds);
+        }
+
+        return dto;
     }
 
 }
