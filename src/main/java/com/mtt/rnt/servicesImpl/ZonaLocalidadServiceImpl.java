@@ -18,5 +18,5 @@ public class ZonaLocalidadServiceImpl implements ZonaLocalidadService {
     public List<ZonaLocalidad> getAllZonaLocalidad() {
         return zonaLocalidadRepository.findAll();
     }
-    
+
 }
