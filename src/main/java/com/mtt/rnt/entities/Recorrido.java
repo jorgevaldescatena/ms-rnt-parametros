@@ -71,9 +71,6 @@ public class Recorrido {
     @Column(name = "ID_ORIGEN")
     private Long idOrigen;
 
-    @Column(name = "ID_SERVICIO")
-    private Long idServicio;
-
     @Column(name = "ID_TARIFA")
     private Long idTarifa;
 
@@ -85,5 +82,9 @@ public class Recorrido {
 
     @Column(name = "ID_SERVICIO_RECORRIDO_OLD")
     private Long idServicioRecorridoOld;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_SERVICIO")
+    private Servicio servicio;
 
 }

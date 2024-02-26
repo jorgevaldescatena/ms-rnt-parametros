@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class ZonaComuna {
 
     @Id
-    @Column(name = "ID_ZONA_COMUNA")
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -24,7 +24,7 @@ public class ZonaComuna {
     @JoinColumn(name = "ID_ZONA")
     private Zona zona;
 
-    @Column(name = "ID_COMUNA")
-    private String idComuna;
+    @Column(name = "ID_COLUMNA")
+    private String idColumna;
 
 }

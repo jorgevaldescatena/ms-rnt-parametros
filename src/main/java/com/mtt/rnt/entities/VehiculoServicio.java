@@ -17,6 +17,7 @@ import java.security.Timestamp;
 public class VehiculoServicio {
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -83,9 +84,6 @@ public class VehiculoServicio {
     @Column(name = "ID_VEHICULO_REEMPLAZADO")
     private Long idVehiculoReemplazado;
 
-    @Column(name = "ID_SERVICIO")
-    private Long idServicio;
-
     @Column(name = "ID_TIPO_INGRESO")
     private Integer idTipoIngreso;
 
@@ -121,5 +119,9 @@ public class VehiculoServicio {
 
     @Column(name = "FECHA_POSTULACION")
     private Timestamp fechaPostulacion;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_SERVICIO")
+    private Servicio servicio;
 
 }

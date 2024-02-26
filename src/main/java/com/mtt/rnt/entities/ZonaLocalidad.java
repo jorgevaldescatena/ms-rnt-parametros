@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class ZonaLocalidad {
 
     @Id
-    @Column(name = "ID_ZONA_LOCALIDAD")
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -26,6 +26,5 @@ public class ZonaLocalidad {
 
     @Column(name = "ID_LOCALIDAD", nullable = false)
     private Integer idLocalidad;
-
 
 }

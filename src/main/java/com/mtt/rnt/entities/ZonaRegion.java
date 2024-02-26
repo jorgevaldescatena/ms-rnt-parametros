@@ -16,6 +16,7 @@ import javax.persistence.*;
 public class ZonaRegion {
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

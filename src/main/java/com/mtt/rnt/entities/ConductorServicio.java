@@ -17,16 +17,17 @@ import java.security.Timestamp;
 public class ConductorServicio {
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "CREATION", nullable = false)
+    @Column(name = "CREATION")
     private Timestamp creation;
 
     @Column(name = "MODIFIED")
     private Timestamp modified;
 
-    @Column(name = "REGION_DESTINO", length = 255)
+    @Column(name = "REGION_DESTINO")
     private String regionDestino;
 
     @Column(name = "ESTADO")
@@ -65,7 +66,8 @@ public class ConductorServicio {
     @Column(name = "ID_CONDUCTOR")
     private Long idConductor;
 
-    @Column(name = "ID_SERVICIO")
-    private Long idServicio;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_SERVICIO")
+    private Servicio servicio;
 
 }

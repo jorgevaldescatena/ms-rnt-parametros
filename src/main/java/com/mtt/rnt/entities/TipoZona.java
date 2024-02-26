@@ -17,7 +17,7 @@ public class TipoZona {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_TIPO_ZONA")
+    @Column(name = "ID")
     private Long id;
 
     @Column(name = "NOMBRE")

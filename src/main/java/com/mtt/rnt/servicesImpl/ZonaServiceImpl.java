@@ -30,6 +30,7 @@ public class ZonaServiceImpl implements ZonaService {
     @Autowired
     ZonaLocalidadRepository zonaLocalidadRepository;
 
+    //TODO: Implementar paginación
     @Override
     public List<ZonaDTO> getAllZonas() {
         List<Zona> allZonas = zonaRepository.findAll();
@@ -93,13 +94,6 @@ public class ZonaServiceImpl implements ZonaService {
         dto.setTipoZona(zona.getTipoZona() != null ? zona.getTipoZona().getNombre() : null);
         dto.setTipoSubsidio(zona.getTipoSubsidio() != null ? zona.getTipoSubsidio().getNombre() : null);
 
-        if (zona.getServicios() != null && !zona.getServicios().isEmpty()) {
-            List<String> servicioIds = zona.getServicios().stream()
-                    .map(servicio -> servicio.getId().toString())
-                    .collect(Collectors.toList());
-            dto.setServicios(servicioIds);
-        }
-
         if (zona.getZonaRegiones() != null && !zona.getZonaRegiones().isEmpty()) {
             List<String> regionIds = zona.getZonaRegiones().stream()
                     .map(zonaRegion -> zonaRegion.getIdRegion())
@@ -109,7 +103,7 @@ public class ZonaServiceImpl implements ZonaService {
 
         if (zona.getZonaComunas() != null && !zona.getZonaComunas().isEmpty()) {
             List<String> comunaIds = zona.getZonaComunas().stream()
-                    .map(zonaComuna -> zonaComuna.getIdComuna())
+                    .map(zonaComuna -> zonaComuna.getIdColumna())
                     .collect(Collectors.toList());
             dto.setComunas(comunaIds);
         }

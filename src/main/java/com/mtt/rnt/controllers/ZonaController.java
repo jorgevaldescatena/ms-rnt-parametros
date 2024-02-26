@@ -26,4 +26,9 @@ public class ZonaController {
         return ResponseEntity.ok(regionesIds);
     }
 
+    @GetMapping("/get-all-zonas")
+    public ResponseEntity<List<ZonaDTO>> getAllZonas() {
+        List<ZonaDTO> allZonasDto = zonaService.getAllZonas();
+        return ResponseEntity.ok(allZonasDto);
+    }
 }

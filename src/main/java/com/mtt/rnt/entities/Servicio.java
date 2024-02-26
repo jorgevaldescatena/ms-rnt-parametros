@@ -18,6 +18,7 @@ import java.util.List;
 public class Servicio {
 
     @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -142,5 +143,13 @@ public class Servicio {
             joinColumns = @JoinColumn(name = "ID_SERVICIO"),
             inverseJoinColumns = @JoinColumn(name = "ID_CONTACTO"))
     private List<Contacto> contactos;
+
+    @ManyToMany
+    @JoinTable(
+            name = "RNT_ZONA",
+            joinColumns = @JoinColumn(name = "ID_SERVICIO", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "ID_ZONA", referencedColumnName = "ID")
+    )
+    private List<Zona> zonas;
 
 }

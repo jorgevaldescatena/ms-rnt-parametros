@@ -17,7 +17,7 @@ import java.util.List;
 public class Zona {
 
     @Id
-    @Column(name = "ZONA_ID")
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -29,7 +29,7 @@ public class Zona {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_TIPO_ZONA")
-    private TipoZona tipoZona;
+    private Zona tipoZona;
 
     @Column(name = "ID_REGION")
     private String idRegion;
@@ -52,8 +52,5 @@ public class Zona {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_TIPO_SUBSIDIO")
     private TipoSubsidio tipoSubsidio;
-
-    @ManyToMany(mappedBy = "zonas")
-    private List<Servicio> servicios;
 
 }

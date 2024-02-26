@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class TipoSubsidio {
 
     @Id
-    @Column(name = "ID_TIPO_SUBSIDIO")
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
