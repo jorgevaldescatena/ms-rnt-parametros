@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.mtt</groupId>
-	<artifactId>rnt</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<artifactId>rnt-parametros</artifactId>
+	<version>1.0.0</version>
+	<packaging>jar</packaging>
 	<name>ms-rnt-parametros</name>
 	<description>Registro nacional de transporte</description>
 	<properties>
