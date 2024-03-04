@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ZonaDTO {
+public class ZonaDTO extends BaseDTO{
 
         private Long id;
         private String nombre;

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ZonaLocalidadDTO {
+public class ZonaLocalidadDTO extends BaseDTO{
 
     private Long id;
     private ZonaDTO zona;

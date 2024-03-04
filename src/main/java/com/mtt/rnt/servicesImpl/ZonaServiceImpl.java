@@ -9,6 +9,9 @@ import com.mtt.rnt.repository.ZonaRegionRepository;
 import com.mtt.rnt.repository.ZonaRepository;
 import com.mtt.rnt.services.ZonaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,11 +33,10 @@ public class ZonaServiceImpl implements ZonaService {
     @Autowired
     ZonaLocalidadRepository zonaLocalidadRepository;
 
-    //TODO: Implementar paginación
     @Override
-    public List<ZonaDTO> getAllZonas() {
-        List<Zona> allZonas = zonaRepository.findAll();
-        return allZonas.stream().map(this::convertToDto).collect(Collectors.toList());
+    public Page<ZonaDTO> getAllZonas(Pageable pageable) {
+        return zonaRepository.findAll(pageable)
+                .map(this::convertToDto);
     }
 
     @Override

@@ -2,12 +2,14 @@ package com.mtt.rnt.services;
 
 import com.mtt.rnt.dto.ZonaDTO;
 import com.mtt.rnt.entities.Zona;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface ZonaService {
 
-    List<ZonaDTO> getAllZonas();
+    Page<ZonaDTO> getAllZonas(Pageable pageable);
 
     /**
      * Devuelve los ids de las regiones correspondientes a las zonas pasadas como parámetro
