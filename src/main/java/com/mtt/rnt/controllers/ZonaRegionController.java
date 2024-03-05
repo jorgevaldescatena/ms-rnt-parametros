@@ -1,8 +1,11 @@
 package com.mtt.rnt.controllers;
 
 import com.mtt.rnt.dto.BaseDTO;
+import com.mtt.rnt.dto.ZonaRegionDTO;
 import com.mtt.rnt.services.ZonaRegionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +23,10 @@ public class ZonaRegionController {
     ZonaRegionService zonaRegionService;
 
     @GetMapping("/get-all-zona-region")
-    public ResponseEntity<List<BaseDTO>> getAllZonaRegion() {
-        List<BaseDTO> zonaRegionDTOs = zonaRegionService.getAllZonaRegion().stream()
-                .map(zonaRegionDTO -> (BaseDTO) zonaRegionDTO)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(zonaRegionDTOs);
+    public ResponseEntity<Page<BaseDTO>> getAllZonaRegion(Pageable pageable) {
+        Page<ZonaRegionDTO> zonaRegionPage = zonaRegionService.getAllZonaRegion(pageable);
+        Page<BaseDTO> baseDTOPage = zonaRegionPage.map(zonaRegionDTO -> (BaseDTO) zonaRegionDTO);
+        return ResponseEntity.ok(baseDTOPage);
     }
 
 }

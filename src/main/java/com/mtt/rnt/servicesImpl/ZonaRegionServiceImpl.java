@@ -5,6 +5,9 @@ import com.mtt.rnt.entities.ZonaRegion;
 import com.mtt.rnt.repository.ZonaRegionRepository;
 import com.mtt.rnt.services.ZonaRegionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +20,9 @@ public class ZonaRegionServiceImpl implements ZonaRegionService {
     ZonaRegionRepository zonaRegionRepository;
 
     @Override
-    public List<ZonaRegionDTO> getAllZonaRegion() {
-        List<ZonaRegion> zonaRegions = zonaRegionRepository.findAll();
-        return zonaRegions.stream().map(this::convertToDTO).collect(Collectors.toList());
+    public Page<ZonaRegionDTO> getAllZonaRegion(Pageable pageable) {
+        Page<ZonaRegion> zonaRegionPage = zonaRegionRepository.findAll(pageable);
+        return zonaRegionPage.map(this::convertToDTO);
     }
 
     private ZonaRegionDTO convertToDTO(ZonaRegion zonaRegion) {

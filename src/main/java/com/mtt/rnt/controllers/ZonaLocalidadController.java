@@ -4,6 +4,8 @@ import com.mtt.rnt.dto.BaseDTO;
 import com.mtt.rnt.dto.ZonaLocalidadDTO;
 import com.mtt.rnt.services.ZonaLocalidadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +22,11 @@ public class ZonaLocalidadController {
     @Autowired
     ZonaLocalidadService zonaLocalidadService;
 
-    @GetMapping("/get-all")
-    public ResponseEntity<List<BaseDTO>> getAllZonaLocalidad() {
-        List<BaseDTO> zonaLocalidadDTOs = zonaLocalidadService.getAllZonaLocalidad().stream()
-                .map(zonaLocalidadDTO -> (BaseDTO) zonaLocalidadDTO)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(zonaLocalidadDTOs);
+    @GetMapping("/get-all-zona-localidad")
+    public ResponseEntity<Page<BaseDTO>> getAllZonaLocalidad(Pageable pageable) {
+        Page<ZonaLocalidadDTO> zonaLocalidadPage = zonaLocalidadService.getAllZonaLocalidad(pageable);
+        Page<BaseDTO> baseDTOPage = zonaLocalidadPage.map(zonaLocalidadDTO -> (BaseDTO) zonaLocalidadDTO);
+        return ResponseEntity.ok(baseDTOPage);
     }
 
 }

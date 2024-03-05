@@ -6,6 +6,8 @@ import com.mtt.rnt.entities.ZonaLocalidad;
 import com.mtt.rnt.repository.ZonaLocalidadRepository;
 import com.mtt.rnt.services.ZonaLocalidadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +20,9 @@ public class ZonaLocalidadServiceImpl implements ZonaLocalidadService {
     ZonaLocalidadRepository zonaLocalidadRepository;
 
     @Override
-    public List<ZonaLocalidadDTO> getAllZonaLocalidad() {
-        List<ZonaLocalidad> zonaLocalidades = zonaLocalidadRepository.findAll();
-        return zonaLocalidades.stream().map(this::convertToDTO).collect(Collectors.toList());
+    public Page<ZonaLocalidadDTO> getAllZonaLocalidad(Pageable pageable) {
+        Page<ZonaLocalidad> zonaLocalidadPage = zonaLocalidadRepository.findAll(pageable);
+        return zonaLocalidadPage.map(this::convertToDTO);
     }
 
     private ZonaLocalidadDTO convertToDTO(ZonaLocalidad zonaLocalidad) {
