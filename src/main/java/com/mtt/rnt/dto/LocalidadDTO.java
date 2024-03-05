@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ZonaComunaDTO extends BaseDTO{
-    private Long id;
-    private Long idZona;
-    private String idColumna;
+public class LocalidadDTO extends BaseDTO{
+
+    private Integer codigo;
+    private String nombre;
+    private ComunaDTO comuna;
+
 }
