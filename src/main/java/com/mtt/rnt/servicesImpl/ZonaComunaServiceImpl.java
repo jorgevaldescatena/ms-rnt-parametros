@@ -25,7 +25,6 @@ public class ZonaComunaServiceImpl implements ZonaComunaService {
         return zonaComunaPage.map(this::convertToDTO);
     }
 
-    //Metodo para convertir de entidad ZonaComuna a DTO ZonaComuna
     private ZonaComunaDTO convertToDTO(ZonaComuna zonaComuna) {
         ZonaComunaDTO dto = new ZonaComunaDTO();
         dto.setId(zonaComuna.getId());
