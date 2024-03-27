@@ -9,6 +9,12 @@ import java.util.List;
 
 public interface ZonaRegionService {
 
+    /**
+     * Obtiene todas las zonas regiones paginadas
+     *
+     * @param pageable
+     * @return Page<ZonaRegionDTO>
+     */
     Page<ZonaRegionDTO> getAllZonaRegion(Pageable pageable);
 
 }

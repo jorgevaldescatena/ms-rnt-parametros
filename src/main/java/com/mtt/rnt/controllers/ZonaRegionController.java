@@ -3,6 +3,7 @@ package com.mtt.rnt.controllers;
 import com.mtt.rnt.dto.BaseDTO;
 import com.mtt.rnt.dto.ZonaRegionDTO;
 import com.mtt.rnt.services.ZonaRegionService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ public class ZonaRegionController {
     @Autowired
     ZonaRegionService zonaRegionService;
 
+    @Operation(summary = "Obtiene todas las zonas regiones", description = "Retorna una página de zonas regiones, soportando paginación.")
     @GetMapping("/get-all-zona-region")
     public ResponseEntity<Page<BaseDTO>> getAllZonaRegion(Pageable pageable) {
         Page<ZonaRegionDTO> zonaRegionPage = zonaRegionService.getAllZonaRegion(pageable);

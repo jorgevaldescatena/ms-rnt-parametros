@@ -3,6 +3,7 @@ package com.mtt.rnt.controllers;
 import com.mtt.rnt.dto.BaseDTO;
 import com.mtt.rnt.dto.ZonaComunaDTO;
 import com.mtt.rnt.services.ZonaComunaService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,8 @@ public class ZonaComunaController {
     @Autowired
     ZonaComunaService zonaComunaService;
 
+
+    @Operation(summary = "Obtiene todas las zonas comunas", description = "Retorna una página de zonas comunas, soportando paginación.")
     @GetMapping("/get-all-zona-comuna")
     public ResponseEntity<Page<BaseDTO>> getAllZonaComuna(Pageable pageable) {
         Page<ZonaComunaDTO> zonaComunaPage = zonaComunaService.getAllZonaComuna(pageable);

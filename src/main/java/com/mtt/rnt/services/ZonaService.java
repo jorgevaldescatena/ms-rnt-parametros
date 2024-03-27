@@ -9,6 +9,12 @@ import java.util.List;
 
 public interface ZonaService {
 
+    /**
+     * Devuelve todas las zonas paginadas
+     *
+     * @param pageable
+     * @return Page<ZonaDTO> Lista de zonas paginadas
+     */
     Page<ZonaDTO> getAllZonas(Pageable pageable);
 
     /**

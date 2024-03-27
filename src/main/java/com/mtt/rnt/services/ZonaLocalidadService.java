@@ -9,6 +9,12 @@ import java.util.List;
 
 public interface ZonaLocalidadService {
 
+    /**
+     * Obtiene una lista pagina de ZonaLocalidad
+     *
+     * @param pageable
+     * @return
+     */
     Page<ZonaLocalidadDTO> getAllZonaLocalidad(Pageable pageable);
 
 }

@@ -9,6 +9,12 @@ import java.util.List;
 
 public interface ZonaComunaService {
 
+    /**
+     * Obtiene todas las zonas comuna paginadas
+     *
+     * @param pageable
+     * @return Page<ZonaComunaDTO>
+     */
     Page<ZonaComunaDTO> getAllZonaComuna(Pageable pageable);
 
 }
