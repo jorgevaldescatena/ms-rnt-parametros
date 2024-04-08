@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -31,11 +32,10 @@ public class RntConfigDB {
     @Value("${spring.jpa.properties.hibernate.dialect}")
     private String dialect;
 
-    @Bean
-    @ConfigurationProperties("spring.datasource")
-    public HikariDataSource rntDataSource(DataSourceProperties properties) {
-        return properties.initializeDataSourceBuilder().type(HikariDataSource.class)
-                .build();
+    @Bean(name = "rntDataSource")
+    @ConfigurationProperties(prefix = "spring.rnt.datasource")
+    public DataSource dataSource() {
+        return DataSourceBuilder.create().build();
     }
 
     @Bean(name = "rntEntityManagerFactory")
@@ -50,6 +50,7 @@ public class RntConfigDB {
         Map<String, Object> properties = new HashMap<>();
         properties.put("hibernate.dialect", dialect);
         factoryBean.setJpaPropertyMap(properties);
+        properties.put("hibernate.default_schema", "NULLID");
 
         return factoryBean;
     }

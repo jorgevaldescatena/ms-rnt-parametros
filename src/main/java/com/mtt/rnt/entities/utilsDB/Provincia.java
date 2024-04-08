@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "PROVINCIA")
+@Table(name = "PROVINCIA", schema = "NULLID")
 public class Provincia {
 
     @Id

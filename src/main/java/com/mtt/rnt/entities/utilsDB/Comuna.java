@@ -18,7 +18,7 @@ public class Comuna {
 
     @Id
     @Column(name = "ID")
-    private String codigo;
+    private String id;
 
     @Column(name = "NOMBRE", nullable = false)
     private String nombre;
@@ -32,7 +32,7 @@ public class Comuna {
 
     @Transient
     public String getIdentifier() {
-        return codigo;
+        return id;
     }
 
     @Transient
