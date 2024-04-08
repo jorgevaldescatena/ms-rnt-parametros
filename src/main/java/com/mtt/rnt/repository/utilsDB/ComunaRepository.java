@@ -1,6 +1,6 @@
-package com.mtt.rnt.repository;
+package com.mtt.rnt.repository.utilsDB;
 
-import com.mtt.rnt.entities.Comuna;
+import com.mtt.rnt.entities.utilsDB.Comuna;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;

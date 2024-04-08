@@ -1,7 +1,7 @@
 package com.mtt.rnt.services;
 
-import com.mtt.rnt.entities.Comuna;
-import com.mtt.rnt.entities.Localidad;
+import com.mtt.rnt.entities.utilsDB.Comuna;
+import com.mtt.rnt.entities.utilsDB.Localidad;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.mtt.rnt.entities;
+package com.mtt.rnt.entities.utilsDB;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
