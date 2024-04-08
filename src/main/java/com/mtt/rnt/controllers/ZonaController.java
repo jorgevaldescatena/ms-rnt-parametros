@@ -2,7 +2,6 @@ package com.mtt.rnt.controllers;
 
 import com.mtt.rnt.dto.BaseDTO;
 import com.mtt.rnt.dto.ZonaDTO;
-import com.mtt.rnt.entities.Zona;
 import com.mtt.rnt.services.ZonaService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;

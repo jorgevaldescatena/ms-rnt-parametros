@@ -2,16 +2,13 @@ package com.mtt.rnt.servicesImpl;
 
 import com.mtt.rnt.dto.ZonaDTO;
 import com.mtt.rnt.dto.ZonaLocalidadDTO;
-import com.mtt.rnt.entities.ZonaLocalidad;
-import com.mtt.rnt.repository.ZonaLocalidadRepository;
+import com.mtt.rnt.entities.RntDB.ZonaLocalidad;
+import com.mtt.rnt.repository.RntDB.ZonaLocalidadRepository;
 import com.mtt.rnt.services.ZonaLocalidadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ZonaLocalidadServiceImpl implements ZonaLocalidadService {

@@ -1,20 +1,17 @@
 package com.mtt.rnt.servicesImpl;
 
 import com.mtt.rnt.dto.ZonaDTO;
-import com.mtt.rnt.entities.Servicio;
-import com.mtt.rnt.entities.Zona;
-import com.mtt.rnt.repository.ZonaComunaRepository;
-import com.mtt.rnt.repository.ZonaLocalidadRepository;
-import com.mtt.rnt.repository.ZonaRegionRepository;
-import com.mtt.rnt.repository.ZonaRepository;
+import com.mtt.rnt.entities.RntDB.Zona;
+import com.mtt.rnt.repository.RntDB.ZonaComunaRepository;
+import com.mtt.rnt.repository.RntDB.ZonaLocalidadRepository;
+import com.mtt.rnt.repository.RntDB.ZonaRegionRepository;
+import com.mtt.rnt.repository.RntDB.ZonaRepository;
 import com.mtt.rnt.services.ZonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

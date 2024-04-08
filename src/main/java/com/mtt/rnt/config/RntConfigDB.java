@@ -1,4 +1,64 @@
 package com.mtt.rnt.config;
 
+import com.zaxxer.hikari.HikariDataSource;
+import jakarta.persistence.EntityManagerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
+
+@Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(
+        entityManagerFactoryRef = "rntEntityManagerFactory",
+        transactionManagerRef = "rntTransactionManager",
+        basePackages = {"com.mtt.rnt.repository.RntDB"}
+)
 public class RntConfigDB {
+
+    @Value("${spring.jpa.properties.hibernate.dialect}")
+    private String dialect;
+
+    @Bean
+    @ConfigurationProperties("spring.datasource")
+    public HikariDataSource rntDataSource(DataSourceProperties properties) {
+        return properties.initializeDataSourceBuilder().type(HikariDataSource.class)
+                .build();
+    }
+
+    @Bean(name = "rntEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(
+            @Qualifier("rntDataSource") DataSource dataSource) {
+        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+        factoryBean.setDataSource(dataSource);
+        factoryBean.setPackagesToScan("com.mtt.rnt.entities.rntDB");
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        factoryBean.setJpaVendorAdapter(vendorAdapter);
+
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("hibernate.dialect", dialect);
+        factoryBean.setJpaPropertyMap(properties);
+
+        return factoryBean;
+    }
+
+    @Bean("rntTransactionManager")
+    public PlatformTransactionManager platformTransactionManager(
+            @Qualifier("rntEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+
+        return new JpaTransactionManager(entityManagerFactory);
+    }
+
 }

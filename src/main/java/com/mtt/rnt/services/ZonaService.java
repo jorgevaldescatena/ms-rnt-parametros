@@ -1,7 +1,6 @@
 package com.mtt.rnt.services;
 
 import com.mtt.rnt.dto.ZonaDTO;
-import com.mtt.rnt.entities.Zona;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

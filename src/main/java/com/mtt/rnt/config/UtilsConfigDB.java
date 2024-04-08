@@ -60,6 +60,7 @@ public class UtilsConfigDB {
         Map<String, Object> properties = new HashMap<>();
         properties.put("hibernate.dialect", dialect);
         factoryBean.setJpaPropertyMap(properties);
+        properties.put("hibernate.default_schema", "NULLID");
 
         return factoryBean;
     }
