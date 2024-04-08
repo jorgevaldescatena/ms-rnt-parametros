@@ -1,7 +1,6 @@
 package com.mtt.rnt.controllers;
 
-import com.mtt.rnt.dto.ComunaDTO;
-import com.mtt.rnt.entities.utilsDB.Comuna;
+import com.mtt.rnt.dto.LocalidadDTO;
 import com.mtt.rnt.services.ComunaService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/comuna", produces = MediaType.APPLICATION_JSON_VALUE)
-public class ComunaController {
+@RequestMapping(path = "/api/localidad", produces = MediaType.APPLICATION_JSON_VALUE)
+public class LocalidadController {
 
     @Autowired
     ComunaService comunaService;
 
-    @Operation(summary = "Obtiene todas las comunas", description = "Retorna todas las comunas con sus respectivas provincias y regiones.")
-    @GetMapping("/get-all-comunas")
-    public ResponseEntity<List<ComunaDTO>> getAllComunas() {
-        List<ComunaDTO> comunas = comunaService.getAllComunas();
-        return ResponseEntity.ok(comunas);
+    @Operation(summary = "Obtiene todas las localidades", description = "Retorna todas las localidades con sus respectivas comunas, provincias y regiones.")
+    @GetMapping("/get-all-localidades")
+    public ResponseEntity<List<LocalidadDTO>> getAllLocalidades() {
+        List<LocalidadDTO> localidades = comunaService.getAllLocalidades();
+        return ResponseEntity.ok(localidades);
     }
 
 }

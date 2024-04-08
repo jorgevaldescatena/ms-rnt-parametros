@@ -1,5 +1,7 @@
 package com.mtt.rnt.services;
 
+import com.mtt.rnt.dto.ComunaDTO;
+import com.mtt.rnt.dto.LocalidadDTO;
 import com.mtt.rnt.entities.utilsDB.Comuna;
 import com.mtt.rnt.entities.utilsDB.Localidad;
 
@@ -11,12 +13,12 @@ public interface ComunaService {
      *
      * @return List<Comuna> - Lista de todas las comunas.
      */
-    List<Comuna> getAllComunas();
+    List<ComunaDTO> getAllComunas();
 
     /** Recupera todas las instancias de Localidad, incluyendo sus relaciones con Comuna, Provincia y Región.
      *
      * @return List<Localidad> - Lista de todas las localidades.
      */
-    List<Localidad> getAllLocalidades();
+    List<LocalidadDTO> getAllLocalidades();
 
 }

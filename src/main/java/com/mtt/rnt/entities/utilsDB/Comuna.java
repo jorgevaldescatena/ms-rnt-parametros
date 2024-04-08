@@ -17,17 +17,17 @@ import java.util.List;
 public class Comuna {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false, columnDefinition = "char")
     private String id;
 
     @Column(name = "NOMBRE", nullable = false)
     private String nombre;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Provincia.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "IDPROVINCIA")
     private Provincia provincia;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "comuna")
+    @OneToMany(fetch = FetchType.LAZY, targetEntity = Localidad.class, mappedBy = "comuna")
     private List<Localidad> localidades;
 
     @Transient

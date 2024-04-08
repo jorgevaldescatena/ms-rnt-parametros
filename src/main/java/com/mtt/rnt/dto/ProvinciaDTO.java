@@ -14,6 +14,5 @@ public class ProvinciaDTO extends BaseDTO{
     private String codigo;
     private String nombre;
     private RegionDTO region;
-    private List<ComunaDTO> comunas;
 
 }
