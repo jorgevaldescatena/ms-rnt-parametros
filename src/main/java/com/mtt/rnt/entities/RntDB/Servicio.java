@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "RNT_SERVICIO")
+@Table(name = "RNT_SERVICIO", schema = "NULLID")
 public class Servicio {
 
     @Id

@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "RNT_RECORRIDO")
+@Table(name = "RNT_RECORRIDO", schema = "NULLID")
 public class Recorrido {
 
     @Id

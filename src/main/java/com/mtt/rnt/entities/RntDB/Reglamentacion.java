@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "RNT_REGLAMENTACION")
+@Table(name = "RNT_REGLAMENTACION", schema = "NULLID")
 public class Reglamentacion {
 
     @Id

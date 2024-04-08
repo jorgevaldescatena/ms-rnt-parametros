@@ -13,7 +13,7 @@ import java.security.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "RNT_VEHICULO_SERVICIO")
+@Table(name = "RNT_VEHICULO_SERVICIO", schema = "NULLID")
 public class VehiculoServicio {
 
     @Id
