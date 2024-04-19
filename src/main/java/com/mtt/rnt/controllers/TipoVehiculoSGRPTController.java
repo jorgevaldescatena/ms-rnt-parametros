@@ -22,7 +22,7 @@ public class TipoVehiculoSGRPTController {
     @Autowired
     TipoVehiculoSGRPTService tipoVehiculoSGRPTService;
 
-    @Operation(summary = "", description = "")
+    @Operation(summary = "Retorna el id del tipo de servicio homologado al consultar por un tipo de descripcion", description = "Retorna el id del tipo de servicio homologado al consultar por un tipoDesc")
     @PostMapping("/get-id-tipo-servicio-homologado")
     public ResponseEntity<Integer> getIdTipoServicioHomologado(@RequestParam String tipoDesc) {
         try{
