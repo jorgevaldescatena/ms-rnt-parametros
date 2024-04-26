@@ -1,0 +1,156 @@
+stages:          # List of stages for jobs, and their order of execution
+  - build
+  #- test
+  - docker
+  - deploy
+  - docker-staging
+  - deploy-staging
+  - docker-prod
+  - deploy-prod
+
+
+variables:
+  rnt_STAGING_TAG_NAME: "staging"
+  rnt_PROD_TAG_NAME: "main"
+
+build-job:       # This job runs in the build stage, which runs first.
+  stage: build
+  image: maven:3.8.4-openjdk-11
+  cache:
+    key: "${CI_PROJECT_ID}"
+    paths:
+      - .m2/repository
+  variables:
+    MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  artifacts:
+    paths:
+      - target/rnt-parametros-1.0.0.jar
+  script:
+    - mvn clean package -DskipTests=true
+
+sonarqube-check:
+  stage: test
+  image: maven:3.8.4-openjdk-11
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  
+    GIT_DEPTH: 0
+    MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  cache:
+    key: "${CI_PROJECT_ID}"
+    paths:
+      - .sonar/cache
+      - .m2/repository
+      - target
+  script: 
+    - mvn verify sonar:sonar -Dsonar.projectKey=rnt-mtt_rnt-parametros_AYMx3o5vZPVv8Q4aADA1
+    - cat target/site/jacoco/index.html| grep -o '<tfoot>.*</tfoot>'
+  coverage: '/Total.*?([0-9]{1,3})%/'
+  artifacts:
+    reports:
+      junit: target/surefire-reports/TEST-*.xml
+  #allow_failure: true
+
+build-docker-image:
+  stage: docker
+  image: docker
+  variables: 
+    DOCKER_TLS_CERTDIR: ""
+    MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  cache:
+    key: "${CI_PROJECT_ID}"
+    paths:
+      - .m2/repository
+  dependencies:
+    - build-job
+  services: 
+    - docker:dind
+  script: 
+    - docker build -f Dockerfile.ci -t rnt/rnt-parametros:$CI_COMMIT_BRANCH .
+    - docker tag rnt/rnt-parametros:$CI_COMMIT_BRANCH docker-registry.mtt.cl:5000/rnt/rnt-parametros:$CI_COMMIT_BRANCH
+    - docker push docker-registry.mtt.cl:5000/rnt/rnt-parametros:$CI_COMMIT_BRANCH
+  only:
+    - develop
+    - release
+
+deploy-dev:      # This job runs in the deploy stage.
+  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
+  image: 
+    name: docker-registry.mtt.cl:5000/mtt/kubectl:1.23
+    entrypoint: [""]
+  script:
+    - kubectl --kubeconfig /config rollout restart deployment rnt-parametros-dev -n rnt
+  only:
+    - develop
+  environment:
+    name: develop
+    url: http://rnt-parametros-dev.k8s.mtt.cl/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
+
+deploy-qa:      # This job runs in the deploy stage.
+  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
+  image: 
+    name: docker-registry.mtt.cl:5000/mtt/kubectl:1.23
+    entrypoint: [""]
+  script:
+    - kubectl --kubeconfig /config rollout restart deployment rnt-parametros-qa -n rnt
+  only:
+    - release
+  environment:
+    name: release
+    url: http://rnt-parametros-qa.k8s.mtt.cl/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
+
+
+build-docker-staging:
+  stage: docker-staging
+  image: docker
+  dependencies:
+    - build-job
+  services: 
+    - docker:dind
+  script: 
+    - docker build -f Dockerfile.ci -t rnt/rnt-parametros:$rnt_STAGING_TAG_NAME .
+    - docker tag rnt/rnt-parametros:$rnt_STAGING_TAG_NAME docker-registry.mtt.cl:5000/rnt/rnt-parametros:$rnt_STAGING_TAG_NAME
+    - docker push docker-registry.mtt.cl:5000/rnt/rnt-parametros:$rnt_STAGING_TAG_NAME
+  only:
+    - staging
+
+deploy-staging:      
+  stage: deploy-staging
+  image: 
+    name: docker-registry.mtt.cl:5000/mtt/kubectl:1.23
+    entrypoint: [""]
+  script:
+    - kubectl --kubeconfig /config rollout restart deployment rnt-parametros-staging -n rnt
+  only:
+    - staging
+  environment:
+    name: staging
+    url: http://rnt-parametros-staging.k8s.mtt.cl/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
+
+build-docker-prod:
+  stage: docker-prod
+  image: docker
+  dependencies:
+    - build-job
+  services: 
+    - docker:dind
+  script: 
+    - docker build -f Dockerfile.ci -t rnt/rnt-parametros:$rnt_PROD_TAG_NAME .
+    - docker tag rnt/rnt-parametros:$rnt_PROD_TAG_NAME docker-registry.mtt.cl:5000/rnt/rnt-parametros:$rnt_PROD_TAG_NAME
+    - docker push docker-registry.mtt.cl:5000/rnt/rnt-parametros:$rnt_PROD_TAG_NAME
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: manual
+
+deploy-prd:
+  stage: deploy-prod
+  image: 
+    name: docker-registry.mtt.cl:5000/mtt/kubectl:1.23
+    entrypoint: [""]
+  script:
+    - kubectl --kubeconfig /config rollout restart deployment rnt-parametros-prd -n rnt
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: manual
+  environment:
+    name: production
+    url: http://rnt-parametros-prd.k8s.mtt.cl/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
