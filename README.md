@@ -4,8 +4,6 @@
 Este es un proyecto de microservicio Spring Boot listo para ser desplegado en contenedores Docker. Está diseñado para ser simple, eficiente y fácil de escalar.
 
 ## Requisitos
-- Java 17
-- Maven
 - Docker
 
 ## Instalación y despliegue
