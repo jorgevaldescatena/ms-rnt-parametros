@@ -17,9 +17,6 @@ git clone http://gitlab.mtt.cl/rnt-api/rnt-parametros.git
 cd rnt-parametros
 git checkout develop
 
-# Construir el proyecto con Maven
-mvn clean package
-
 # Construir la imagen Docker
 docker build -t rnt_parametros .
 
