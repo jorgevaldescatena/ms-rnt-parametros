@@ -1,0 +1,76 @@
+stages:          # List of stages for jobs, and their order of execution
+  - build
+  - deploy
+
+build-docker-image:
+  stage: build
+  image: docker
+  services: 
+    - docker:dind
+  script: 
+    - docker build . -t rnt-api/rnt-parametros:$CI_COMMIT_BRANCH
+    - docker tag rnt-api/rnt-parametros:$CI_COMMIT_BRANCH docker-registry.mtt.cl:5000/rnt-api/rnt-parametros:$CI_COMMIT_BRANCH
+    - docker push docker-registry.mtt.cl:5000/rnt-api/rnt-parametros:$CI_COMMIT_BRANCH
+  only:
+    - develop
+  
+deploy-dev:      # This job runs in the deploy stage.
+  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
+  image: 
+    name: docker-registry.mtt.cl:5000/mtt/kubectl:1.23
+    entrypoint: [""]
+  dependencies:
+    - build-docker-image
+  script:
+    - kubectl --kubeconfig /config rollout restart deployment rnt-api-parametros-dev -n rnt-api
+  only:
+    - develop
+  environment:
+    name: develop
+    url: http://rnt-api-parametros-dev.k8s.mtt.cl/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
+
+deploy-qa:      # This job runs in the deploy stage.
+  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
+  image: 
+    name: docker-registry.mtt.cl:5000/mtt/kubectl:1.23
+    entrypoint: [""]
+  dependencies:
+    - build-docker-image
+  script:
+    - kubectl --kubeconfig /config rollout restart deployment rnt-api-parametros-qa -n rnt-api
+  only:
+    - release
+  environment:
+    name: release
+    url: http://rnt-api-parametros-qa.k8s.mtt.cl/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
+
+deploy-staging:      
+  stage: deploy
+  image: 
+    name: docker-registry.mtt.cl:5000/mtt/kubectl:1.23
+    entrypoint: [""]
+  dependencies:
+    - build-docker-image
+  script:
+    - kubectl --kubeconfig /config rollout restart deployment rnt-api-parametros-staging -n rnt-api
+  only:
+    - staging
+  environment:
+    name: staging
+    url: http://rnt-api-parametros-staging.k8s.mtt.cl/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
+
+deploy-prd:
+  stage: deploy
+  image: 
+    name: docker-registry.mtt.cl:5000/mtt/kubectl:1.23
+    entrypoint: [""]
+  dependencies:
+    - build-docker-image
+  script:
+    - kubectl --kubeconfig /config rollout restart deployment rnt-api-parametros-prd -n rnt-api
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: manual
+  environment:
+    name: production
+    url: http://rnt-api-parametros-prd.k8s.mtt.cl/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
