@@ -13,6 +13,9 @@ build-docker-image:
     - docker push docker-registry.mtt.cl:5000/rnt-api/rnt-parametros:$CI_COMMIT_BRANCH
   only:
     - develop
+    - release
+    - staging
+    - main
   
 deploy-dev:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
