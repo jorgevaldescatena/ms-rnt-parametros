@@ -43,7 +43,7 @@ public class RntConfigDB {
             @Qualifier("rntDataSource") DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setDataSource(dataSource);
-        factoryBean.setPackagesToScan("com.mtt.rnt.entities.rntDB");
+        factoryBean.setPackagesToScan("com.mtt.rnt.entities.RntDB");
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         factoryBean.setJpaVendorAdapter(vendorAdapter);
 
