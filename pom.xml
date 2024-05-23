@@ -16,6 +16,9 @@
 	<description>Registro nacional de transporte</description>
 	<properties>
 		<java.version>17</java.version>
+		<sonar.projectKey>rnt-parametros</sonar.projectKey>
+		<sonar.projectName>rnt-parametros</sonar.projectName>
+		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
 	</properties>
 	<dependencies>
 		<dependency>

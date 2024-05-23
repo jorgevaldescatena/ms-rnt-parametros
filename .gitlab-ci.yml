@@ -1,4 +1,6 @@
 stages:          # List of stages for jobs, and their order of execution
+  - sonarqube-check
+  - sonarqube-vulnerability-report
   - build
   - deploy
 
@@ -77,3 +79,39 @@ deploy-prd:
   environment:
     name: production
     url: http://rnt-api-parametros-prd.k8s.mtt.cl/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
+
+sonarqube-check:
+  stage: sonarqube-check
+  image: maven:3-eclipse-temurin-17
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+    GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script: 
+    - mvn verify sonar:sonar
+  allow_failure: true
+  only:
+    - develop
+    - release
+    - staging
+    - main
+
+sonarqube-vulnerability-report:
+  stage: sonarqube-vulnerability-report
+  script:
+    - 'curl -u "${SONAR_TOKEN}:" "${SONAR_HOST_URL}/api/issues/gitlab_sast_export?projectKey=rnt-parametros&branch=${CI_COMMIT_BRANCH}&pullRequest=${CI_MERGE_REQUEST_IID}" -o gl-sast-sonar-report.json'
+  allow_failure: true
+  only:
+    - develop
+    - release
+    - staging
+    - main
+  artifacts:
+    expire_in: 1 day
+    reports:
+      sast: gl-sast-sonar-report.json
+  dependencies:
+    - sonarqube-check
