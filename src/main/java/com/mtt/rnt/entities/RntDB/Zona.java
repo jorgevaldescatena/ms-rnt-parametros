@@ -49,7 +49,7 @@ public class Zona {
     @OneToMany(mappedBy = "zona", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ZonaLocalidad> zonaLocalidades;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_TIPO_SUBSIDIO")
     private TipoSubsidio tipoSubsidio;
 

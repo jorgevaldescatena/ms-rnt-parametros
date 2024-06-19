@@ -33,6 +33,7 @@ public class ZonaServiceImpl implements ZonaService {
     ZonaLocalidadRepository zonaLocalidadRepository;
 
     @Override
+    @Transactional(readOnly = true, transactionManager = "rntTransactionManager")
     public Page<ZonaDTO> getAllZonas(Pageable pageable) {
         return zonaRepository.findAll(pageable)
                 .map(this::convertToDto);

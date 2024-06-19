@@ -20,7 +20,7 @@ public class ZonaRegion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_ZONA", nullable = false, insertable = false, updatable = false)
     private Zona zona;
 

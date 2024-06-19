@@ -1,5 +1,6 @@
 package com.mtt.rnt.dto;
 
+import com.mtt.rnt.entities.RntDB.Zona;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ZonaRegionDTO extends BaseDTO{
     private Long id;
-    private Long idZona;
+    private ZonaDTO zona;
     private String idRegion;
 }
