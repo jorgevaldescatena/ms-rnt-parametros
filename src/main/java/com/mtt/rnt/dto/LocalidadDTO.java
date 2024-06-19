@@ -1,5 +1,6 @@
 package com.mtt.rnt.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LocalidadDTO extends BaseDTO{
 
-    private Integer codigo;
+    private Long codigo;
     private String nombre;
+    @JsonBackReference
     private ComunaDTO comuna;
 
 }

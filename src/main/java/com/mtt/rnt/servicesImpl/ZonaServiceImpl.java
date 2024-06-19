@@ -7,6 +7,7 @@ import com.mtt.rnt.repository.RntDB.ZonaLocalidadRepository;
 import com.mtt.rnt.repository.RntDB.ZonaRegionRepository;
 import com.mtt.rnt.repository.RntDB.ZonaRepository;
 import com.mtt.rnt.services.ZonaService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +33,6 @@ public class ZonaServiceImpl implements ZonaService {
     ZonaLocalidadRepository zonaLocalidadRepository;
 
     @Override
-    @Transactional(value = "rntTransactionManager", readOnly = true)
     public Page<ZonaDTO> getAllZonas(Pageable pageable) {
         return zonaRepository.findAll(pageable)
                 .map(this::convertToDto);
@@ -92,8 +92,8 @@ public class ZonaServiceImpl implements ZonaService {
         dto.setIdRegion(zona.getIdRegion());
         dto.setIdOld(zona.getIdOld());
         dto.setActiva(zona.getActiva());
-        dto.setTipoZona(zona.getTipoZona() != null ? zona.getTipoZona().getNombre() : null);
-        dto.setTipoSubsidio(zona.getTipoSubsidio() != null ? zona.getTipoSubsidio().getNombre() : null);
+        dto.setTipoZona(zona.getTipoZona() != null ? zona.getTipoZona() : null);
+        dto.setTipoSubsidio(zona.getTipoSubsidio() != null ? zona.getTipoSubsidio() : null);
 
         if (zona.getZonaRegiones() != null && !zona.getZonaRegiones().isEmpty()) {
             List<String> regionIds = zona.getZonaRegiones().stream()

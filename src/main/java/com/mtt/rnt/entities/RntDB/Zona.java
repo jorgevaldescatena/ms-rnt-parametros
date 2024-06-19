@@ -27,9 +27,9 @@ public class Zona {
     @Column(name = "DESCRIPTOR")
     private String descriptor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_TIPO_ZONA")
-    private Zona tipoZona;
+    private TipoZona tipoZona;
 
     @Column(name = "ID_REGION")
     private String idRegion;
@@ -40,13 +40,13 @@ public class Zona {
     @Column(name = "ACTIVA")
     private Boolean activa;
 
-    @OneToMany(mappedBy = "zona", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "zona", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ZonaRegion> zonaRegiones;
 
-    @OneToMany(mappedBy = "zona", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "zona", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ZonaComuna> zonaComunas;
 
-    @OneToMany(mappedBy = "zona", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "zona", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ZonaLocalidad> zonaLocalidades;
 
     @ManyToOne(fetch = FetchType.LAZY)

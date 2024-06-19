@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ZonaComunaDTO extends BaseDTO{
     private Long id;
-    private Long idZona;
+    private ZonaDTO zona;
     private String idColumna;
 }

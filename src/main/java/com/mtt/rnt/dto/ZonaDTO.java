@@ -1,5 +1,6 @@
 package com.mtt.rnt.dto;
 
+import com.mtt.rnt.entities.RntDB.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,9 +18,9 @@ public class ZonaDTO extends BaseDTO{
         private String idRegion;
         private Long idOld;
         private Boolean activa;
-        private String tipoZona;
-        private String tipoSubsidio;
-        private List<String> servicios;
+        private TipoZona tipoZona;
+        private TipoSubsidio tipoSubsidio;
+        //private List<String> servicios;
         private List<String> regiones;
         private List<String> comunas;
         private List<String> localidades;
