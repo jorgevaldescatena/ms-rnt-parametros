@@ -17,12 +17,12 @@ public class Localidad {
 
     @Id
     @Column(name = "ID", nullable = false)
-    private Integer codigo;
+    private Long codigo;
 
     @Column(name = "NOMBRE", nullable = false)
     private String nombre;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Comuna.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "IDCOMUNA", nullable = true)
     private Comuna comuna;
 
