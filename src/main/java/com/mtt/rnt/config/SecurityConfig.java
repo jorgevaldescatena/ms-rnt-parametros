@@ -1,5 +1,6 @@
 package com.mtt.rnt.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,7 +15,8 @@ import com.mtt.rnt.utils.WSO2UserInfoTokenIntrospector;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
+    @Value("${userInfoEndPoint}")
+    private String userInfoEndPoint;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -36,7 +38,7 @@ public class SecurityConfig {
 
     @Bean
     public OpaqueTokenIntrospector opaqueTokenIntrospector() {
-        String userInfoEndpoint = "https://amqa.mtt.cl:8244/userinfo";
+        String userInfoEndpoint = userInfoEndPoint;
         return new WSO2UserInfoTokenIntrospector(userInfoEndpoint);
     }
 
